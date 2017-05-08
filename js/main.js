@@ -22,8 +22,31 @@
         window.onmousewheel=document.onmousewheel=scrollFun;//IE/Opera/Chrome/Safari
           
     }  
-  
+    var box01_index = 0;
+    var box02_index = 0;
+    var box01_p = document.getElementById('content1_text').children;
 
+    var content_text2 = document.getElementById('content2_text').children; //第二屏文字
+    
+    //var indexs = 0;
+    var f_btn = document.getElementById("float_btn").children;
+    var nav_ul = document.getElementById('nav_ul').children;
+    //var wrapBox = document.getElementById("wrap");
+    var foot = document.getElementById("foot");
+    
+
+    function boxOne() {
+        // console.log(23223);
+        if(box01_index >=0 && box01_index <= 2){
+            box01_p[box01_index].style.opacity = '1';
+            box01_index ++;
+        }
+        else{
+            clearInterval(boxOneTimer);
+        }
+    }
+
+    var boxOneTimer = setInterval(boxOne,800);
     //滚动事件处理函数  
     function scrollFun(event){  
   
@@ -40,6 +63,8 @@
                     indexs++;
                     //turnPage(indexs);  
                     btnChange(indexs,true);
+                    
+
   
                 }   
   
@@ -62,11 +87,6 @@
               
     }  
 
-//var indexs = 0;
-var f_btn = document.getElementById("float_btn").children;
-var nav_ul = document.getElementById('nav_ul').children;
-//var wrapBox = document.getElementById("wrap");
-var foot = document.getElementById("foot");
 function btnChange(index,flag){
     var height = window.innerHeight;
     var fh = foot.offsetHeight;
@@ -79,15 +99,26 @@ function btnChange(index,flag){
     
     if(flag){
 
-        if(index <= 0 ){
+        if(index < 0 ){
 
             indexs = 0;
             f_btn[0].style.height = "8px";
             f_btn[0].style.width = "8px";
             turnPage(indexs);
         }
-        else if(index >0 && index <=3){
+        else if(index >=0 && index <=3){
+            if(indexs===1){//第二屏动画
+                    // content02_timer = setInterval(content02Tow,500);
 
+                    $(".content02_p").animate({right:(0)},500);  
+                // content02_timer = setTimeout(setInterval(content02Tow,500),200);
+            }
+            else{
+
+                for(var temp=0;temp<content_text2.length;temp++)
+                    content_text2[temp].style.right = '-100%';
+                // content02_timer = setInterval(content02NoTow,500);
+            }
             f_btn[index].style.height = "8px";
             f_btn[index].style.width = "8px";
 
@@ -96,6 +127,8 @@ function btnChange(index,flag){
             //indexs++;
             console.log(indexs);
             turnPage(index);
+            
+
         }
         else if(index === 4){
 
